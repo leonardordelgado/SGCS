@@ -5,10 +5,10 @@ btApagar.addEventListener('click', apagar)
 var btFinaliza = document.querySelector("button#finalizar")
 btFinaliza.addEventListener('click', finalizar)
 
-var dispesas = []
+var despesas = []
 var receitas = []
 var receita = document.querySelector('select#rec')
-var dispesa = document.querySelector('select#disp')
+var despesa = document.querySelector('select#desp')
 var valor =""
 var elemento = document.querySelector('input#valor')
 var resultado = document.querySelector('div#resultado')
@@ -57,10 +57,10 @@ function add(){
             var op = document.createElement('option')
             op.text = `${descricao}: R$ ${valor}`
             valor = valor.replace(/[^0-9]/g, '');
-            dispesas.push(valor)
-            dispesas.forEach(function (item, indice){
+            despesas.push(valor)
+            despesas.forEach(function (item, indice){
                 op.setAttribute('id', indice)
-                dispesa.appendChild(op)
+                despesa.appendChild(op)
             })
         }
     }
@@ -68,10 +68,10 @@ function add(){
 function apagar(){
     let idReceitas =  document.getElementById('rec').selectedIndex;
     let idOpReceitas =  document.getElementById('rec').options;
-    let idDispesas =  document.getElementById('disp').selectedIndex;
-    let idOPDispesas =  document.getElementById('disp').options;
+    let idDespesas =  document.getElementById('desp').selectedIndex;
+    let idOPDespesas =  document.getElementById('desp').options;
     resultado.innerHTML = ""
-    if(idOpReceitas[idReceitas]== undefined && idOPDispesas[idDispesas]== undefined){
+    if(idOpReceitas[idReceitas]== undefined && idOPDespesas[idDespesas]== undefined){
         alert("Selecione um valor para ser excluido")
     }else{
         var remov = ""
@@ -81,16 +81,16 @@ function apagar(){
             receita.removeChild(document.getElementById(`${remov}`))
             receitas.splice(receitas.indexOf(`${remov}`),1)
         }
-        if(idOPDispesas[idDispesas] != undefined){
-            remov = `${idOPDispesas[idDispesas].id}`
-            dispesa.removeChild(document.getElementById(`${remov}`))
-            dispesas.splice(dispesas.indexOf(`${remov}`),1)
+        if(idOPDespesas[idDespesas] != undefined){
+            remov = `${idOPDespesas[idDespesas].id}`
+            despesa.removeChild(document.getElementById(`${remov}`))
+            despesas.splice(despesas.indexOf(`${remov}`),1)
         }
     }
 }
 function finalizar(){
     var somaReceita = 0
-    var somaDispesa = 0
+    var somaDespesa = 0
     var total = ""
     var msg = ""
     resultado.innerHTML = ""
@@ -99,12 +99,12 @@ function finalizar(){
         somaReceita = somaReceita  += resultValores
     }
 
-    for(let valorDispesa of dispesas){
-        var resultValores = +valorDispesa
-        somaDispesa = somaDispesa += resultValores
+    for(let valorDespesa of despesas){
+        var resultValores = +valorDespesa
+        somaDespesa = somaDespesa += resultValores
     }
 
-    total = somaReceita - somaDispesa
+    total = somaReceita - somaDespesa
     var totalconvert = total
     console.log(totalconvert)
 
@@ -114,10 +114,10 @@ function finalizar(){
         somaReceita  = somaReceita.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
     }
     
-    somaDispesa = String(somaDispesa)
-    somaDispesa = somaDispesa.replace(/([0-9]{2})$/g, ",$1");
-    if (somaDispesa.length > 6) {
-        somaDispesa = somaDispesa.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
+    somaDespesa = String(somaDespesa)
+    somaDespesa = somaDespesa.replace(/([0-9]{2})$/g, ",$1");
+    if (somaDespesa.length > 6) {
+        somaDespesa = somaDespesa.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
     }
     total  = String(total)
     total  = total.replace(/([0-9]{2})$/g, ",$1");
@@ -125,28 +125,28 @@ function finalizar(){
         total  = total.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
     }
     
-    if(somaReceita == 0 || somaDispesa == 0){
+    if(somaReceita == 0 || somaDespesa == 0){
         alert('E preciso que os campos sejam preenchidos!')
     }else{
         if(totalconvert < 0){
             msg = `Você esta negativo em R$ ${total}`
             var resultcalc = document.createElement('p')
             resultcalc.innerHTML += `O total da receita e R$ ${somaReceita}<br>`
-            resultcalc.innerHTML += `O total da dispesa e R$ ${somaDispesa}<br>`
+            resultcalc.innerHTML += `O total da despesa e R$ ${somaDespesa}<br>`
             resultcalc.innerHTML += `${msg} <br>`
             resultado.appendChild(resultcalc)
         }else if(totalconvert == 0){
             msg = 'Você não posssui dinheiro e não existe dividas faltando'
             var resultcalc = document.createElement('p')
             resultcalc.innerHTML += `O total da receita e R$ ${somaReceita}<br>`
-            resultcalc.innerHTML += `O total da dispesa e R$ ${somaDispesa}<br>`
+            resultcalc.innerHTML += `O total da despesa e R$ ${somaDespesa}<br>`
             resultcalc.innerHTML += `${msg} <br>`
             resultado.appendChild(resultcalc)
         }else if(totalconvert > 0){
             msg =`Você tem o total de R$ ${total} sobrando`
             var resultcalc = document.createElement('p')
             resultcalc.innerHTML += `O total da receita e R$ ${somaReceita}<br>`
-            resultcalc.innerHTML += `O total da dispesa e R$ ${somaDispesa}<br>`
+            resultcalc.innerHTML += `O total da despesa e R$ ${somaDespesa}<br>`
             resultcalc.innerHTML += `${msg}<br>`
             resultado.appendChild(resultcalc)
         }
