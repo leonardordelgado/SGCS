@@ -103,16 +103,15 @@ function finalizar(){
         var resultValores = +valorDispesa
         somaDispesa = somaDispesa += resultValores
     }
-     total  = String(total)
-    total  = total .replace(/([0-9]{2})$/g, ",$1");
-    if (total.length > 6) {
-        total  = total.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
-    }
+
+    total = somaReceita - somaDispesa
+    var totalconvert = total
+    console.log(totalconvert)
 
     somaReceita  = String(somaReceita)
-    somaReceita  = somaReceita .replace(/([0-9]{2})$/g, ",$1");
+    somaReceita  = somaReceita.replace(/([0-9]{2})$/g, ",$1");
     if (somaReceita.length > 6) {
-        somaReceita  = somaReceita .replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
+        somaReceita  = somaReceita.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
     }
     
     somaDispesa = String(somaDispesa)
@@ -120,26 +119,30 @@ function finalizar(){
     if (somaDispesa.length > 6) {
         somaDispesa = somaDispesa.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
     }
+    total  = String(total)
+    total  = total.replace(/([0-9]{2})$/g, ",$1");
+    if (total.length > 6) {
+        total  = total.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
+    }
     
     if(somaReceita == 0 || somaDispesa == 0){
         alert('E preciso que os campos sejam preenchidos!')
     }else{
-        total = somaReceita - somaDispesa
-        if(total < 0){
+        if(totalconvert < 0){
             msg = `Você esta negativo em R$ ${total}`
             var resultcalc = document.createElement('p')
             resultcalc.innerHTML += `O total da receita e R$ ${somaReceita}<br>`
             resultcalc.innerHTML += `O total da dispesa e R$ ${somaDispesa}<br>`
             resultcalc.innerHTML += `${msg} <br>`
             resultado.appendChild(resultcalc)
-        }else if(total < 0){
+        }else if(totalconvert == 0){
             msg = 'Você não posssui dinheiro e não existe dividas faltando'
             var resultcalc = document.createElement('p')
             resultcalc.innerHTML += `O total da receita e R$ ${somaReceita}<br>`
             resultcalc.innerHTML += `O total da dispesa e R$ ${somaDispesa}<br>`
             resultcalc.innerHTML += `${msg} <br>`
             resultado.appendChild(resultcalc)
-        }else{
+        }else if(totalconvert > 0){
             msg =`Você tem o total de R$ ${total} sobrando`
             var resultcalc = document.createElement('p')
             resultcalc.innerHTML += `O total da receita e R$ ${somaReceita}<br>`
